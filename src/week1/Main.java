@@ -1,7 +1,12 @@
 package week1;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -38,6 +43,36 @@ public class Main {
         // 기능2 스트림 버전
         double meanScoreStream = studentList.stream().mapToInt(Student::getScore).average().orElse(0.0);
         System.out.printf("학생 평균점수: %.2f\n", meanScoreStream);
+
+        // Map
+        String text = "apple banana apple orange banana apple";
+        String[] wordList = text.split(" ");
+        Map<String, Integer> wordMap = new HashMap<>();
+        for (String word : wordList) {
+            if (wordMap.containsKey(word)) {
+                Integer newValue = wordMap.get(word) + 1;
+                wordMap.put(word, newValue);
+            }
+            else {
+                wordMap.put(word, 1);
+            }
+        }
+        System.out.println(wordMap);
+
+        // Map 개선1: getOrDefault()
+        wordMap = new HashMap<>();
+        for (String word : wordList) {
+            wordMap.put(word, wordMap.getOrDefault(word, 0)+1);
+        }
+        System.out.println(wordMap);
+
+        // Map 개선2: Stream
+        Map<String, Integer> wordMap2 = Arrays.stream(text.split(" ")).collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(e -> 1)));
+        System.out.println(wordMap2);
+
+        // Map 개선3: 최적화
+        Map<String, Integer> wordMap3 = Arrays.stream(text.split(" ")).collect(Collectors.toMap(w -> w, w -> 1, Integer::sum));
+        System.out.println(wordMap3);
 
     }
 }
