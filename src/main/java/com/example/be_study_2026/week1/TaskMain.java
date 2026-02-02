@@ -1,4 +1,4 @@
-package week1;
+package com.example.be_study_2026.week1;
 
 import java.util.ArrayList;
 import java.util.List;

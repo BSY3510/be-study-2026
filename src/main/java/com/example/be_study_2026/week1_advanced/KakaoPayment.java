@@ -1,6 +1,6 @@
-package week1_advanced;
+package com.example.be_study_2026.week1_advanced;
 
-public class KakaoPayment implements PaymentMethod{
+public class KakaoPayment implements PaymentMethod {
 
     @Override
     public void pay(int amount) {
