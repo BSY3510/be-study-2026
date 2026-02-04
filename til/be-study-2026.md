@@ -26,3 +26,15 @@
 - @RestControllerAdvice: 컨트롤러의 예외를 감시
 - @ExceptionHandler: 특정 예외에 대한 처리 담당
 - ResponseEntity: HTTP 상태 코드를 정밀하게 제어
+## **HTTP**
+- HTTP Method GET과 POST 차이
+  - 멱등성, GET은 서버의 상태가 변하지 않지만 POST는 서버에 데이터가 생길 수 있다.
+- HTTP Status Code 401과 403 차이
+  - 비인가된 것인지 권한의 문제인지의 차이
+  - 로그인 실패는 비인가된 사용자이고, 일반 사용자가 관리자 권한에 접근하는 것은 권한 문제
+- Stateless
+  - Cookie & Session
+## **Raw Socket Web Server**
+- Spring Boot를 사용하면 Tomcat으로 가능하지만 ServerSocket을 이용
+- 메시지 구성: 상태, 헤더, 빈 줄, 바디
+- .flush(): 메시지 전송
