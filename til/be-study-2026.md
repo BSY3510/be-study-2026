@@ -63,3 +63,22 @@
 1. 외부 설정 파일 이용: 별도의 파일을 만들어 관리
 2. 환경 변수 활용: 코드에는 변수명만 사용, 실제값은 운영체제 또는 IDE 설정에 저장
 3. Spring Profiles 활용: 개발용과 운영용 설정 분리
+
+## **RDBMS**
+- PK와 FK
+  - 기본키(PK, Primary Key): Unique하고, Not Null하며 행을 특정함
+  - 외래키(FK, Foreign Key): 테이블 간의 통로 역할, 참조 무결성을 지킴
+- 정규화: 이상 현상(Anomalies) 방지
+  - 정규화 Trade-off: 정규화를 많이하면 테이블이 잘게 쪼개지기에 데이터를 가져올 때 여러 테이블을 합치는 JOIN 연산이 많아져 Read 성능이 낮아짐
+- 트랜잭션
+  - ACID
+  - Atomicity: 원자성, 트랜잭션 전체가 성공하거나 완전 실패
+  - Consistency: 일관성, 트랜잭션 전후의 데이터 상태가 규칙에 맞아야 함
+  - Isolation: 격리성, 서로 간섭되면 안됨
+  - Durability: 지속성, 성공한 트랜잭션은 저장되어야 함
+- 인덱스: (장점) Read 속도 빨라짐, (단점) 인덱스 업데이트로 Write 속도 느려짐
+- 스키마(Schema) 설계
+  - 타입: BIGINT, VARCHAR, TIMESTAMP, TEXT 등
+  - 자동 증가: AUTO_INCREMENT
+  - 중복 방지: UNIQUE, UNIQUE KEY 키명 (컬럼1, 컬럼2, ...)
+  - 외래키 설정: FOREIGN KEY (컬럼명) REFERENCES 테이블명(컬럼명)
