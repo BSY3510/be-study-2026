@@ -82,3 +82,25 @@
   - 자동 증가: AUTO_INCREMENT
   - 중복 방지: UNIQUE, UNIQUE KEY 키명 (컬럼1, 컬럼2, ...)
   - 외래키 설정: FOREIGN KEY (컬럼명) REFERENCES 테이블명(컬럼명)
+
+# week4
+## CRUD API
+- 데이터 처리의 기본 동작: Create, Read, Update, Delete
+
+## @Transactional
+- 작업 중 에러가 발생하면, 아예 없던 일로 되돌리는(Rollback) 안전장치
+
+## Dirty Checking
+- JPA가 트랜잭션이 끝나는 순간, 처음 조회했을 때와 Entity의 값이 달라짐(Dirty)을 감지하고 쿼리를 날림.
+
+## 자료구조
+- ArrayList vs LinkedList
+  - ArrayList: 메모리에 순서대로 저장
+  - LinkedList: 링크를 통해 접근하기에 메모리에 산재됨
+  - 값 삽입은 LinkedList가 빠르지만 링크를 타고 가기에 접근까지의 시간이 소요됨
+- HashMap
+  - 해시함수를 활용하여 키-값 쌍을 저장/조회하는 자료구조
+  - 해시 충돌: 서로 다른 키들이 같은 해시값을 가질 때 발생
+- Stack vs Queue
+  - Stack: Last In First Out(ex. 브라우저의 뒤로 가기)
+  - Queue: First In First Out(ex. 선착순 대기열)
