@@ -104,3 +104,37 @@
 - Stack vs Queue
   - Stack: Last In First Out(ex. 브라우저의 뒤로 가기)
   - Queue: First In First Out(ex. 선착순 대기열)
+
+# week5
+## 인증(Authentication)
+- ex. 신분증 확인, 로그인 과정
+
+## 인가(Authorization)
+- ex. 출입증 확인, 관리자 권한 확인
+
+## Spring Security
+- ```implementation 'org.springframework.boot:spring-boot-starter-security'```
+- SecurityConfig
+  - @Configuration(설정 파일), @EnableWebSecurity(기능 활성화)
+  - CSRF: Cross-Site Request Forgery, 교차 사이트 요청 위조, 로그인된 사용자의 권한을 훔쳐, 사용자가 원치 않는 악의적인 요청을 특정 웹사이트에 보내게 만드는 공격 기법
+
+## PasswordEncoder
+- DB에 비밀번호를 그대로 저장하지 않고 암호화하여 저장하기 위해 사용
+
+## IoC(Inversion of Control, 제어의 역전)
+- 인터페이스만 보고 코딩하면, 프레임워크가 상황에 맞게 부품들을 갈아끼워 줄 수 있다.
+
+## DI(Dependency Injection, 의존성 주입)
+- 불변성과 누락 방지를 위해 생성자 주입을 이용
+  - final 키워드 사용으로 객체 생성 후 의존성이 바뀔 위험이 없다.
+  - 컴파일 시점에 의존성 누락을 잡아낼 수 있다.
+
+## Spring Bean
+- @Service: 비즈니스 로직이 들어있음을 명시
+- @Repository: DB 접근 로직임을 명시
+- @Controller: 웹 요청을 받는 창구임을 명시
+- => 모두 @Component의 특수 형태
+
+## @Primary vs @Qualifier
+- @Primary: 해당 구현체를 기본으로 사용 명시
+- @Qualifier("이름"): 특정 이름의 부품을 사용 명시
