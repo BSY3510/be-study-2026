@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -27,22 +29,27 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // 임시 사용자 생성(DB가 아닌 하드코딩으로 일단 구현)
+//    // 임시 사용자 생성(DB가 아닌 하드코딩으로 일단 구현)
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        UserDetails user = User.builder()
+//            .username("user")
+//            .password("{noop}1234")     // {noop}: 암호화 하지 않음(테스트용)
+//            .roles("USER")
+//            .build();
+//
+//        UserDetails admin = User.builder()
+//            .username("admin")
+//            .password("{noop}1234")
+//            .roles("ADMIN")
+//            .build();
+//
+//        return new InMemoryUserDetailsManager(user, admin);
+//    }
+
     @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.builder()
-            .username("user")
-            .password("{noop}1234")     // {noop}: 암호화 하지 않음(테스트용)
-            .roles("USER")
-            .build();
-
-        UserDetails admin = User.builder()
-            .username("admin")
-            .password("{noop}1234")
-            .roles("ADMIN")
-            .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
