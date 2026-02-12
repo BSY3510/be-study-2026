@@ -19,7 +19,7 @@ public class CoffeeController {
 
     @GetMapping("/order")
     public Menu orderCoffee(@RequestParam(value = "name") String menuName) {
-        return baristaService.makeCoffee(menuName);
+        return baristaService.orderCoffee(menuName);
     }
 
     @GetMapping("/menus")
@@ -29,13 +29,13 @@ public class CoffeeController {
 
     @PostMapping("/admin/menu")
     public String addMenu(@RequestBody MenuRequest request) {
-        baristaService.addMenu(request.name, request.price);    // 클래스로써 사용
+        baristaService.addMenu(request.name(), request.price(), request.quantity());
         return "메뉴 등록 완료: " + request.name;
     }
 
     @PutMapping("/admin/menu/{id}")
     public String updateMenu(@PathVariable Long id, @RequestBody MenuRequest request) {
-        baristaService.updateMenuPrice(id, request.price());    // 레코드로써 사용
+        baristaService.updateMenuPrice(id, request.price());
         return "메뉴 가격 수정 완료";
     }
 
@@ -45,5 +45,5 @@ public class CoffeeController {
         return "메뉴 삭제 완료";
     }
 
-    public record MenuRequest(String name, int price) {}
+    public record MenuRequest(String name, int price, int quantity) {}
 }

@@ -13,8 +13,27 @@ public class BaristaService {
     private final MenuRepository menuRepository;
 
     @Transactional
-    public void addMenu(String name, int price) {
-        Menu menu = new Menu(name, price);
+    public Menu orderCoffee(String menuName) {
+        Menu findMenu = menuRepository.findByName(menuName).orElseThrow(() -> new IllegalArgumentException("없는 메뉴입니다."));
+        Menu lockedMenu = menuRepository.findByIdWithLock(findMenu.getId()).orElseThrow(() -> new IllegalArgumentException("메뉴 조회 실패"));
+
+        // 테스트용 코드: 락 확인을 위한 5초간 멈춤
+        try {
+            System.out.println(">> 락 획득, 5초간 작업 수행 중");
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        lockedMenu.decreaseQuantity(1);
+        System.out.println(">> 주문 완료, 재고: " + lockedMenu.getQuantity());
+
+        return lockedMenu;
+    }
+
+    @Transactional
+    public void addMenu(String name, int price, int quantity) {
+        Menu menu = new Menu(name, price, quantity);
         menuRepository.save(menu);
     }
 

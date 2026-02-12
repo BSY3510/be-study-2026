@@ -22,9 +22,20 @@ public class Menu {
 
     private int price;
 
-    public Menu(String name, int price) {
+    @Column(nullable = false)
+    private int quantity;
+
+    public Menu(String name, int price, int quantity) {
         this.name = name;
         this.price = price;
+        this.quantity = quantity;
+    }
+
+    public void decreaseQuantity(int count) {
+        if (this.quantity - count < 0) {
+            throw new IllegalArgumentException("재고가 부족합니다. 현재 재고: " + this.quantity);
+        }
+        this.quantity -= count;
     }
 
     public void updatePrice(int price) {

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 public class DataInit implements CommandLineRunner {
 
     private final MemberRepository memberRepository;
+    private final MenuRepository menuRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -35,6 +36,10 @@ public class DataInit implements CommandLineRunner {
                 passwordEncoder.encode("1234"),
                 "USER"
             ));
+        }
+        if (menuRepository.count() == 0) {
+            menuRepository.save(new Menu("아메리카노", 4000, 100));
+            menuRepository.save(new Menu("라떼", 4500, 100));
         }
     }
 
