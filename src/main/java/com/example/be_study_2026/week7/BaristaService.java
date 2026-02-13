@@ -17,14 +17,6 @@ public class BaristaService {
         Menu findMenu = menuRepository.findByName(menuName).orElseThrow(() -> new IllegalArgumentException("없는 메뉴입니다."));
         Menu lockedMenu = menuRepository.findByIdWithLock(findMenu.getId()).orElseThrow(() -> new IllegalArgumentException("메뉴 조회 실패"));
 
-        // 테스트용 코드: 락 확인을 위한 5초간 멈춤
-        try {
-            System.out.println(">> 락 획득, 5초간 작업 수행 중");
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         lockedMenu.decreaseQuantity(1);
         System.out.println(">> 주문 완료, 재고: " + lockedMenu.getQuantity());
 
