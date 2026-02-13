@@ -45,4 +45,8 @@ public class Menu {
         this.price = price;
     }
 
+    public void addQuantity(int quantity) {
+        this.quantity += quantity;
+    }
+
 }

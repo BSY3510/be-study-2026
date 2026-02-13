@@ -2,6 +2,8 @@ package com.example.be_study_2026.week10;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class Order {
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,12 +47,24 @@ public class Order {
             order.addOrderItem(item);
         }
         order.orderDate = LocalDateTime.now();
+        order.status = OrderStatus.ORDER;
         return order;
     }
 
     private void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
+    }
+
+    public void cancel() {
+        if (this.status == OrderStatus.CANCEL) {
+            throw new IllegalArgumentException("이미 취소된 주문입니다.");
+        }
+
+        this.status = OrderStatus.CANCEL;
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
     }
 
 }

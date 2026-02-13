@@ -41,6 +41,10 @@ public class OrderItem {
         return orderItem;
     }
 
+    public void cancel() {
+        getMenu().addQuantity(count);
+    }
+
     protected void setOrder(Order order) {
         this.order = order;
     }

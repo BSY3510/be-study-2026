@@ -34,4 +34,10 @@ public class OrderService {
         return order.getId();
     }
 
+    @Transactional
+    public void cancelOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("해당 주문이 없습니다. id=" + orderId));
+        order.cancel();
+    }
+
 }
