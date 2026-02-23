@@ -51,6 +51,8 @@
 - @Entity 어노테이션을 통해 클래스를 JPA가 관리하는 Entity가 되고, DB 테이블과 매핑되는 대상으로 등록
 - @NoArgsConstructor: JPA 엔티티는 기본 생성자가 필수
 - @Id: Primary Key 설정
+- @GeneratedValue
+  - strategy: GenerationType.IDENTITY(MySQL, auto increment)
 - @Column: DB 컬럼 설정
 
 ## **Repository**
@@ -89,6 +91,9 @@
 
 ## @Transactional
 - 작업 중 에러가 발생하면, 아예 없던 일로 되돌리는(Rollback) 안전장치
+- 트랜잭션 단위로 묶음 처리를 하여, 메소드 안에서 실행되는 여러 SQL을 하나의 논리적 작업 단위로 처리
+- 모두 성공하면 커밋, 예외 발생 시 롤백
+- 일반적인 패턴: 서비스 레이어의 비즈니스 로직 단위로 나뉜 메소드에 붙임
 
 ## Dirty Checking
 - JPA가 트랜잭션이 끝나는 순간, 처음 조회했을 때와 Entity의 값이 달라짐(Dirty)을 감지하고 쿼리를 날림.
@@ -150,6 +155,23 @@
 - @Lock 어노테이션 - LockModeType
   - PESSIMISTIC_READ: 읽기 가능, 쓰기 대기
   - PESSIMISTIC_WRITE: 읽기/쓰기 모두 대기
+  - Lock이 걸린 메소드를 사용하는 부분에 @Transactional 어노테이션이 있어야 함
 
 ## 딜레이
 - Thread.sleep() 메소드로 테스트를 위한 지연 가능
+
+# week7
+## 테스트 코드
+- 테스트 자동화
+  - JUnit 5: 자바 단위 테스트를 위한 테스트 프레임워크
+  - Concurrency Test: 동시성 문제가 있는지 확인하기 위해 여러 스레드를 동시에 돌려보는 테스트
+- @SpringBootTest: Spring 전체 컨텍스트를 올려서 실제 서비스처럼 테스트
+- @AfterEach: 각 테스트 메소드 실행 후에 호출
+- @BeforeEach: 각 테스트 메소드 실행 전마다 호출
+- @AutoWired: Spring이 자동으로 빈 주입
+- @Test: JUnit이 테스트라고 알려주는 스위치
+- @DisplayName: 테스트 결과를 볼 때 읽기 쉽게 사람이 이해하는 이름을 붙임
+- 멀티 스레드 환경
+  - ExecutorService es = Executors.newFixedThreadPool();
+  - 스레드 풀 생성
+  - 주의사항: ExecutorService를 통해 다른 스레드들을 만들어 생성하고, @Transactional은 같은 스레드 안에서만 유효하기에, 별도로 생성된 스레드는 트랜잭션을 공유하지 못할 수 있음
