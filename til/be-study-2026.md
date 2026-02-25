@@ -160,6 +160,25 @@
 ## 딜레이
 - Thread.sleep() 메소드로 테스트를 위한 지연 가능
 
+## DTO
+- 계층 간 데이터 교환만을 위해 사용하는 객체
+- 로직이 없어야 함
+- 직렬화&역직렬화
+  - 자바 객체 -> JSON(직렬화, Server -> Client)
+  - JSON -> 자바 객체(역직렬화, Client -> Server)
+  - Spring Boot의 Jackson 라이브러리 이용
+- Controller에서 도메인 클래스를 직접 반환하거나 파라미터로 받는 것이 아닌 DTO 클래스를 이용
+
+## 어노테이션
+- @RequestParam: URL 뒤에 붙는 값, 간단한 값
+- @RequestBody: HTTP Body에 담긴 JSON, 복잡한 데이터
+- @PathVariable: URL 경로 자체
+
+## 실습
+- 싱글톤으로 관리되는 클래스는 Race Condition을 고려해야 함
+- id 생성의 경우 AtomicLong을 활용, 스레드 안전한 리스트를 위해 CopyOnWriteArrayList 활용
+- List -> stream -> map, toList
+
 # week7
 ## 테스트 코드
 - 테스트 자동화
